@@ -103,3 +103,12 @@ def delete_task_v2(task_id: int, api_key: str = Depends(verify_api_key)):
 # Register Routers
 app.include_router(apiv1, prefix="/v1")
 app.include_router(apiv2, prefix="/v2")
+
+
+@app.get("/", tags=["root"])
+def read_root():
+    return {"message": "Welcome to API. Access with endpoint /v1/file/1"}
+
+@app.get("/health")
+def health_check():
+    return {"status": "API is in optimal condition"}
