@@ -14,11 +14,11 @@ app = FastAPI()
 # Get API Key from environment variables
 API_KEY = os.getenv("LAB_API_KEY")
 
-# API key dependency
 def verify_api_key(request: Request):
-    api_key = request.headers.get("X-API-KEY")
+    # Check API key from both headers and query parameters
+    api_key = request.headers.get("X-API-KEY") or request.query_params.get("api_key")
     if api_key != API_KEY:
-        raise HTTPException(status_code=401, detail="Unauthorized: Invalid API Key.")
+        raise HTTPException(status_code=401, detail="Invalid API Key")
     return api_key
 
 # Shared Task Database
